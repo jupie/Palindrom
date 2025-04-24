@@ -10,4 +10,9 @@ public class PalindromeContext : DbContext
     public PalindromeContext(DbContextOptions options) : base(options)
     {
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<PalindromeErgebnisDbo>().HasKey(dbo => dbo.Eingabe); 
+    }
 }
