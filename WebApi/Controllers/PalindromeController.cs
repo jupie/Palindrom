@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Palindrom;
+using WebApi.Controllers.Dto;
 using WebApi.UseCaseInteractors;
 
 namespace WebApi.Controllers;
 
 
 [ApiController]
-[Route("[controller]")]
+[Route("/api/[controller]")]
 public class PalindromeController
 {
     private readonly IPalindromeInteractor _interactor;
@@ -22,9 +23,9 @@ public class PalindromeController
         return _interactor.BerechnePalindrome(eingabe);
     }
     [HttpPost(Name = "SpeicherPalindrom")]
-    public async Task PostPalindrome(int eingabe)
+    public async Task PostPalindrome([FromBody] EingabeDto eingabeDto)
     {
-        await _interactor.SpeicherPalindrome(eingabe);
+        await _interactor.SpeicherPalindrome(eingabeDto.Eingabe);
     }
     
 }
