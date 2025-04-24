@@ -6,7 +6,6 @@ public class TransformierenTest
 {
     [Theory(DisplayName = "Transformieren findet das passende Palindrom")]
     [InlineData(121, 121)]
-    [InlineData(34543, 34543)]
     [InlineData(11, 11)]
     [InlineData(28, 121)]
     [InlineData(51, 66)]
@@ -22,7 +21,7 @@ public class TransformierenTest
     }
     
     [Theory(DisplayName = "Transformieren mit ungültiger Eingabe wirft eine Exception")]
-    [InlineData(0)]
+    [InlineData(-1)]
     [InlineData(1001)]
     public void PalindromTest02(int n)
     {
