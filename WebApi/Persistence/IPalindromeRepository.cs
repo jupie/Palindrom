@@ -1,5 +1,4 @@
 ﻿using Palindrom;
-using WebApi.Entities;
 
 namespace WebApi.Persistence;
 
