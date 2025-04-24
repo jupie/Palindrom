@@ -27,6 +27,7 @@ public class PalindromeRepositoryTest
         resulting.Eingabe.Should().Be(eingabe);
         resulting.Palindrome.Should().Be(ergebnis.Palindrome);
         resulting.Zyklen.Should().Be(ergebnis.Zyklen);
+        await context2.Database.EnsureDeletedAsync();
     }
 
    
