@@ -31,7 +31,6 @@ public class PalindromeController
     }
     
     [HttpGet("AllePalindrome",Name = "Gebe Alle Palindrome")]
-
     public async Task<List<PalindromeReadModel>> GetAllPalindromes()
     {
       return  await _interactor.GebeAllePalindrome();

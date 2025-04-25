@@ -21,6 +21,5 @@ public class PalindromeRepository(PalindromeContext context): IPalindromeReposit
     public async Task<List<PalindromeReadModel>> GetAll()
     {
        return await context.PalindromeErgebnisse.Select(dbo => new PalindromeReadModel(dbo.Eingabe, dbo.Palindrome, dbo.Zyklen)).ToListAsync(); 
-        
     }
 }
