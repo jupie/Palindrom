@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Components.Routing;
+using Microsoft.AspNetCore.Mvc;
 using Palindrom;
 using WebApi.Controllers.Dto;
+using WebApi.Persistence.Entities;
 using WebApi.UseCaseInteractors;
 
 namespace WebApi.Controllers;
@@ -17,15 +19,22 @@ public class PalindromeController
         _interactor = interactor;
     }
 
-    [HttpGet(Name = "BerechnePalindrom")]
+    [HttpGet("Berechne",Name = "Berechne Palindrom")]
     public Palindromergebnis GetPalindromeFor(int eingabe)
     {
         return _interactor.BerechnePalindrome(eingabe);
     }
-    [HttpPost(Name = "SpeicherPalindrom")]
+    [HttpPost(Name = "Speicher Palindrom")]
     public async Task PostPalindrome([FromBody] EingabeDto eingabeDto)
     {
         await _interactor.SpeicherPalindrome(eingabeDto.Eingabe);
+    }
+    
+    [HttpGet("AllePalindrome",Name = "Gebe Alle Palindrome")]
+
+    public async Task<List<PalindromeReadModel>> GetAllPalindromes()
+    {
+      return  await _interactor.GebeAllePalindrome();
     }
     
 }

@@ -1,5 +1,7 @@
-﻿using Palindrom;
+﻿using Microsoft.EntityFrameworkCore;
+using Palindrom;
 using WebApi.Persistence.Entities;
+using WebApi.UseCaseInteractors;
 
 namespace WebApi.Persistence;
 
@@ -14,5 +16,11 @@ public class PalindromeRepository(PalindromeContext context): IPalindromeReposit
             Zyklen = ergebnis.Zyklen
         }); 
         await context.SaveChangesAsync(); 
+    }
+
+    public async Task<List<PalindromeReadModel>> GetAll()
+    {
+       return await context.PalindromeErgebnisse.Select(dbo => new PalindromeReadModel(dbo.Eingabe, dbo.Palindrome, dbo.Zyklen)).ToListAsync(); 
+        
     }
 }

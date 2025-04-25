@@ -9,3 +9,19 @@
   Es wurden {{zyklen}} Zyklen benötigt.
   <button (click)="speichern()">Speichern</button>
 }
+<button (click)="gebeAlleAus()">Ergebnisse Ausgeben</button>
+<table>
+  <tr>
+    <th>Eingabe</th>
+    <th>Palindrom</th>
+    <th>Zyklen</th>
+  </tr>
+
+@for (res of ergebnisse; track ergebnisse){
+  <tr>
+    <td>{{res.eingabe}}</td>
+    <td>{{res.palindrome}}</td>
+    <td>{{res.zyklen}}</td>
+  </tr>
+}
+</table>

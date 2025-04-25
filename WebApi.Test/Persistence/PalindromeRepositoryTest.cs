@@ -1,8 +1,11 @@
-﻿using AutoFixture.Xunit2;
+﻿using System.Net.Sockets;
+using AutoFixture.Xunit2;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Palindrom;
 using WebApi.Persistence;
+using WebApi.Persistence.Entities;
+using WebApi.UseCaseInteractors;
 
 namespace WebApi.Test.Persistence;
 
@@ -29,6 +32,31 @@ public class PalindromeRepositoryTest
         resulting.Zyklen.Should().Be(ergebnis.Zyklen);
         await context2.Database.EnsureDeletedAsync();
     }
-
+    [Theory( DisplayName = "Lesen liefert alle Palindrome zurück")]
+    [AutoData]
+    public async Task GetAllPalindromeTest(List<PalindromeReadModel> palindromes)
+    {
+        //arrange
+        var options = new DbContextOptionsBuilder<PalindromeContext>()
+            .UseInMemoryDatabase(databaseName: "TestDatabase")
+            .Options;
+        using var context = new PalindromeContext(options);
+        context.Database.EnsureCreated();
+        palindromes.ForEach(model => 
+            context.Add(new PalindromeErgebnisDbo
+            {
+                Eingabe = model.Eingabe,
+                Palindrome = model.Palindrome,
+                Zyklen = model.Zyklen,
+            }));
+        await context.SaveChangesAsync();
+        var sut = new PalindromeRepository(context); 
+        //act 
+        var result = await sut.GetAll(); 
+        //assert 
+        result.Should().BeEquivalentTo(palindromes);
+        using var context2 = new PalindromeContext(options);
+        await context2.Database.EnsureDeletedAsync();
+    }
    
 }

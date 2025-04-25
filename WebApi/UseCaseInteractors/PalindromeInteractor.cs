@@ -25,4 +25,9 @@ public class PalindromeInteractor : IPalindromeInteractor
         var result = BerechnePalindrome(eingabe);
         await _repo.AddPalindromeErgebnis(eingabe, result);
     }
+
+    public async Task<List<PalindromeReadModel>> GebeAllePalindrome()
+    {
+        return await _repo.GetAll(); 
+    }
 }
